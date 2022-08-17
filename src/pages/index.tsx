@@ -1,5 +1,14 @@
-import styled from '../styles/home.module.css';
+import Head from 'next/head';
 
 export default function Home() {
-    return <h1 className={styled.title}>My page</h1>;
+    return (
+        <>
+            <Head>
+                <title>Ig News | Home</title>
+            </Head>
+            <h1>
+                My <span>page</span>
+            </h1>
+        </>
+    );
 }
