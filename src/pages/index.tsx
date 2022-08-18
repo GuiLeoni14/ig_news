@@ -38,7 +38,7 @@ export default function PageHome({ product }: TPageHomeProps) {
 export const getStaticProps: GetStaticProps<TPageHomeProps> = async () => {
     // retrieve apenas um elemento
     // expand retorna todas as informações do produto por default retorna apenas o id do produto ligado ao preço
-    const price = await stripe.prices.retrieve('price_1LXwcyCWf3dovHWdvf6kvYWY', {
+    const price = await stripe.prices.retrieve(process.env.STRIPE_PRODUCT_ID as string, {
         expand: ['product'],
     });
     const product = {
