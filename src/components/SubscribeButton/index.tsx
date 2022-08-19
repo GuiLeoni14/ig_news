@@ -8,6 +8,7 @@ interface SubscribeButtonProps {
 }
 
 export function SubscribeButton({ priceId }: SubscribeButtonProps) {
+    console.log(priceId);
     const { data: session } = useSession();
     async function handleSubscribe() {
         if (!session) {
