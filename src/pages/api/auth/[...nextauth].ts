@@ -34,7 +34,6 @@ export default NextAuth({
         async session({ session }) {
             let userActiveSubscription = null;
             if (session && session.user && session.user.email) {
-                console.log(session.user.email);
                 try {
                     userActiveSubscription = await fauna.query(
                         q.Get(
