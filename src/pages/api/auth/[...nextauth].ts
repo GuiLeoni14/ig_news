@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import { fauna } from '../../../services/fauna';
-import { query as q } from 'faunadb';
+import { Casefold, query as q } from 'faunadb';
 
 export default NextAuth({
     providers: [
@@ -30,6 +30,37 @@ export default NextAuth({
                 console.log(error);
                 return false;
             }
+        },
+        async session({ session }) {
+            let userActiveSubscription = null;
+            if (session && session.user && session.user.email) {
+                console.log(session.user.email);
+                try {
+                    userActiveSubscription = await fauna.query(
+                        q.Get(
+                            q.Intersection([
+                                q.Match(
+                                    q.Index('subscription_by_user_ref'),
+                                    q.Select(
+                                        'ref',
+                                        q.Get(
+                                            q.Match(q.Index('user_by_email'), q.Casefold(session.user.email as string)),
+                                        ),
+                                    ),
+                                ),
+                                q.Match(q.Index('subscription_by_status'), Casefold('active')),
+                            ]),
+                        ),
+                    );
+                } catch (error) {
+                    console.log(error);
+                    userActiveSubscription = null;
+                }
+            }
+            return {
+                ...session,
+                activeSubscription: userActiveSubscription,
+            };
         },
     },
 });

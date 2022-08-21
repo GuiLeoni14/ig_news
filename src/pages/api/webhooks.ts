@@ -43,7 +43,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const { type } = event;
 
         if (relevantEvents.has(type)) {
-            console.log('FUI CHAMADO PELO TIPO', type);
             try {
                 switch (type) {
                     case 'customer.subscription.updated':
@@ -59,7 +58,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                             checkoutSession.customer?.toString() as string,
                             true,
                         );
-                        console.log('SESSÃO CRIADA');
                         break;
                     default:
                         throw new Error('Unhandled event.');

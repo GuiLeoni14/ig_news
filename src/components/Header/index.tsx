@@ -5,7 +5,6 @@ import styles from './styles.module.scss';
 
 export function Header() {
     const { asPath } = useRouter();
-    console.log(asPath === '/');
     return (
         <header className={styles.headerContainer}>
             <div className={styles.headerContent}>

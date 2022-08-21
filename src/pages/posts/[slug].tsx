@@ -32,7 +32,16 @@ export default function PagePost({ post }: PagePostProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const session = getSession({ req: ctx.req });
+    const session = await getSession({ req: ctx.req });
+
+    if (!session || !session.activeSubscription) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        };
+    }
     const prismic = getPrismicClient({
         previewData: ctx.previewData,
     });

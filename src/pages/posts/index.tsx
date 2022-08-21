@@ -62,7 +62,6 @@ export const getStaticProps: GetStaticProps = async (ctx: GetStaticPropsContext)
             }),
         };
     });
-    console.log('response', JSON.stringify(response, null, 2));
     return {
         props: { posts },
     };
