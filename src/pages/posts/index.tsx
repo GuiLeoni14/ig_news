@@ -1,5 +1,7 @@
+import { GetStaticProps, GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { getPrismicClient } from '../../services/prismic';
 import styles from './styles.module.scss';
 
 export default function PagePosts() {
@@ -66,3 +68,17 @@ export default function PagePosts() {
         </>
     );
 }
+
+export const getStaticProps: GetStaticProps = async (ctx: GetStaticPropsContext) => {
+    const prismic = getPrismicClient({
+        previewData: ctx.previewData,
+    });
+    const response = await prismic.getAllByType('publicar', {
+        fetch: ['publicar.title', 'publicar.content'],
+        pageSize: 100,
+    });
+    console.log('response', JSON.stringify(response, null, 2));
+    return {
+        props: {},
+    };
+};
