@@ -27,7 +27,7 @@ export default function PageHome({ product }: TPageHomeProps) {
                         Get access to all publications <br />
                         <span>for {product.amount} mouth</span>
                     </p>
-                    <SubscribeButton priceId={product.priceId} />
+                    <SubscribeButton />
                 </section>
                 <img src="/images/avatar.svg" alt="girl coding" />
             </main>
